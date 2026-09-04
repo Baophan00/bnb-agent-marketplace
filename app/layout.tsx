@@ -25,6 +25,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <a href="/category/grid-trading" className="hover:text-white">Grid Trading</a>
               <a href="/category/yield-optimization" className="hover:text-white">Yield</a>
               <a href="/category/health-factor" className="hover:text-white">Health Factor</a>
+              <a href="/stats" className="hover:text-white">Stats</a>
+              <a href="/compare" className="hover:text-white">Compare</a>
             </nav>
           </div>
         </header>

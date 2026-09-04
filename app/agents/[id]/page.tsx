@@ -1,24 +1,49 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { getAgents } from "@/lib/agents";
+import type { Agent } from "@/lib/agents";
 
 const BAG_DOCS = "https://docs.bnbchain.org/developer-kit/bnbchain-studio/";
 const BAG_CLI = "https://docs.bnbchain.org/developer-kit/bnbchain-studio/cli-reference";
 
 export async function generateStaticParams() {
-  const agents = await getAgents();
-  return agents.slice(0, 40).map((agent) => ({ id: agent.id }));
+  let agents: Agent[] = [];
+  try {
+    agents = await getAgents();
+  } catch {
+    // during static export, API may be unavailable
+  }
+  if (!agents.length) {
+    return [
+      { id: "12189" },
+      { id: "12190" },
+      { id: "12191" },
+      { id: "12192" },
+      { id: "12193" },
+    ];
+  }
+  return agents.slice(0, 20).map((agent) => ({ id: agent.id }));
 }
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const agents = await getAgents();
+  let agents: Agent[] = [];
+  try {
+    agents = await getAgents();
+  } catch {
+    // ignore
+  }
   const agent = agents.find((a) => a.id === params.id);
   if (!agent) return { title: "Agent not found" };
   return { title: `${agent.name} | BNB Agent Marketplace` };
 }
 
 export default async function AgentPage({ params }: { params: { id: string } }) {
-  const agents = await getAgents();
+  let agents: Agent[] = [];
+  try {
+    agents = await getAgents();
+  } catch {
+    // ignore
+  }
   const agent = agents.find((a) => a.id === params.id);
 
   if (!agent) {
