@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { getAgents } from "@/lib/agents";
 import type { Agent } from "@/lib/agents";
+import ReviewsClient from "@/components/ReviewsClient";
 
 const BAG_DOCS = "https://docs.bnbchain.org/developer-kit/bnbchain-studio/";
 const BAG_CLI = "https://docs.bnbchain.org/developer-kit/bnbchain-studio/cli-reference";
@@ -155,6 +156,8 @@ export default async function AgentPage({ params }: { params: { id: string } }) 
           </Link>
         </div>
       </section>
+
+      <ReviewsClient agentId={agent.id} />
     </div>
   );
 }
