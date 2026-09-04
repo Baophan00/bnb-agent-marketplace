@@ -1,1 +1,33 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Misc
+.DS_Store
+*.pem
+.env*.local
 .vercel
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Test
+coverage/
+node_modules/
+.next/
+.env*.local
