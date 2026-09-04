@@ -1,14 +1,17 @@
+const isPages = process.env.GITHUB_PAGES === "true";
+
 const nextConfig = {
   reactStrictMode: true,
-  turbopack: {
-    root: "/Users/baophan/marketplace-defi",
-  },
   output: "export",
-  basePath: "/bnb-agent-marketplace",
-  assetPrefix: "/bnb-agent-marketplace/",
   images: {
     unoptimized: true,
   },
+  ...(isPages
+    ? {
+        basePath: "/bnb-agent-marketplace",
+        assetPrefix: "/bnb-agent-marketplace/",
+      }
+    : {}),
 };
 
 export default nextConfig;
