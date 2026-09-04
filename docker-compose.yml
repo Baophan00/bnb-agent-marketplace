@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  marketplace:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_APP_NAME=BNB Agent Marketplace
+    restart: unless-stopped
