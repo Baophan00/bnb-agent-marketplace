@@ -3,10 +3,11 @@ import Link from "next/link";
 import { getAgents } from "@/lib/agents";
 
 const BAG_DOCS = "https://docs.bnbchain.org/developer-kit/bnbchain-studio/";
+const BAG_CLI = "https://docs.bnbchain.org/developer-kit/bnbchain-studio/cli-reference";
 
 export async function generateStaticParams() {
   const agents = await getAgents();
-  return agents.slice(0, 20).map((agent) => ({ id: agent.id }));
+  return agents.slice(0, 40).map((agent) => ({ id: agent.id }));
 }
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
@@ -31,6 +32,9 @@ export default async function AgentPage({ params }: { params: { id: string } }) 
       </div>
     );
   }
+
+  const explorerUrl = `https://8004scan.io/agents/${agent.id}`;
+  const bagInitCmd = `bag init ${agent.name.replace(/[^a-zA-Z0-9-]/g, "-").toLowerCase()} --framework adk --network bsc`;
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-10">
@@ -76,7 +80,7 @@ export default async function AgentPage({ params }: { params: { id: string } }) 
             </div>
             <div>
               <span className="text-slate-400">Registry:</span>{" "}
-              <Link href={`https://8004scan.io/agents/${agent.id}`} target="_blank" rel="noreferrer" className="text-white hover:underline">
+              <Link href={explorerUrl} target="_blank" rel="noreferrer" className="text-white hover:underline">
                 View on 8004scan →
               </Link>
             </div>
@@ -95,9 +99,15 @@ export default async function AgentPage({ params }: { params: { id: string } }) 
         <p className="mt-2 text-sm text-slate-300">
           Hire and run this agent through BNB Agent Studio. No blockchain experience is required.
         </p>
+
+        <div className="mt-4 rounded-lg border border-white/10 bg-white/5 p-4 text-xs text-slate-300">
+          <div className="text-slate-400">Quick start</div>
+          <code className="mt-2 block font-mono text-white">{bagInitCmd}</code>
+        </div>
+
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
-            href={`https://docs.bnbchain.org/developer-kit/bnbchain-studio/`}
+            href={BAG_DOCS}
             target="_blank"
             rel="noreferrer"
             className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-100"
@@ -105,7 +115,7 @@ export default async function AgentPage({ params }: { params: { id: string } }) 
             Open BNB Agent Studio docs
           </Link>
           <Link
-            href="https://docs.bnbchain.org/developer-kit/bnbchain-studio/cli-reference"
+            href={BAG_CLI}
             target="_blank"
             rel="noreferrer"
             className="rounded-lg border border-white/20 px-4 py-2 text-sm font-medium hover:bg-white/5"

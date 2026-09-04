@@ -16,6 +16,7 @@ const CATEGORIES = [
 
 export default async function HomePage() {
   const agents = await getAgents();
+  const featured = agents.slice(0, 4);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-16">
@@ -44,8 +45,13 @@ export default async function HomePage() {
       </section>
 
       <section className="mt-16">
-        <h2 className="text-2xl font-bold">Browse by category</h2>
-        <p className="mt-2 text-slate-400">Pick a use case to see agents built for it.</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold">Browse by category</h2>
+            <p className="mt-2 text-slate-400">Pick a use case to see agents built for it.</p>
+          </div>
+          <span className="text-sm text-slate-400">{agents.length} agents on BSC</span>
+        </div>
 
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {CATEGORIES.map((cat) => (
@@ -64,12 +70,17 @@ export default async function HomePage() {
 
       <section className="mt-16">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Featured agents</h2>
-          <span className="text-sm text-slate-400">{agents.length} results</span>
+          <div>
+            <h2 className="text-2xl font-bold">Featured agents</h2>
+            <p className="mt-2 text-slate-400">Hand-picked agents with verifiable on-chain activity.</p>
+          </div>
+          <Link href="/agents" className="text-sm text-white hover:underline">
+            View all →
+          </Link>
         </div>
 
         <div className="mt-6 grid gap-4 md:grid-cols-2">
-          {agents.slice(0, 4).map((agent) => (
+          {featured.map((agent) => (
             <Link
               key={agent.id}
               href={`/agents/${agent.id}`}
@@ -83,12 +94,6 @@ export default async function HomePage() {
               <p className="mt-3 text-xs text-slate-400">Performance: {agent.performance}</p>
             </Link>
           ))}
-        </div>
-
-        <div className="mt-6">
-          <Link href="/agents" className="text-sm text-white hover:underline">
-            View all agents →
-          </Link>
         </div>
       </section>
     </div>
