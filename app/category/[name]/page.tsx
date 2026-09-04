@@ -1,10 +1,5 @@
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Category | BNB Agent Marketplace",
-  description: "Browse agents by category",
-};
-
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
   rebalancing: {
     title: "Rebalancing",
@@ -82,6 +77,20 @@ const SAMPLE_AGENTS = [
     performance: "Kept HF > 1.25 in -12% price shock test",
   },
 ];
+
+export const metadata: Metadata = {
+  title: "Category | BNB Agent Marketplace",
+  description: "Browse agents by category",
+};
+
+export function generateStaticParams() {
+  return [
+    { name: "rebalancing" },
+    { name: "grid-trading" },
+    { name: "yield-optimization" },
+    { name: "health-factor" },
+  ];
+}
 
 export default function CategoryPage({ params }: { params: { name: string } }) {
   const slug = params.name;
