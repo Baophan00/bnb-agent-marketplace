@@ -1,7 +1,12 @@
 self.__BUILD_MANIFEST = {
   "__rewrites": {
     "afterFiles": [],
-    "beforeFiles": [],
+    "beforeFiles": [
+      {
+        "source": "/bnb-agent-marketplace//_next/:path+",
+        "destination": "/bnb-agent-marketplace/_next/:path+"
+      }
+    ],
     "fallback": []
   },
   "sortedPages": [

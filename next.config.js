@@ -4,6 +4,8 @@ const nextConfig = {
     root: "/Users/baophan/marketplace-defi",
   },
   output: "export",
+  basePath: "/bnb-agent-marketplace",
+  assetPrefix: "/bnb-agent-marketplace/",
   images: {
     unoptimized: true,
   },
