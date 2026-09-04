@@ -1,4 +1,11 @@
+import Link from "next/link";
 import { Metadata } from "next";
+import { getAgentsByCategory } from "@/lib/agents";
+
+export const metadata: Metadata = {
+  title: "Category | BNB Agent Marketplace",
+  description: "Browse agents by category",
+};
 
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
   rebalancing: {
@@ -19,83 +26,14 @@ const CATEGORY_META: Record<string, { title: string; description: string }> = {
   },
 };
 
-const SAMPLE_AGENTS = [
-  {
-    id: "bnb-studio-reference-001",
-    name: "PancakeSwap Liquidity Manager",
-    category: "rebalancing",
-    description: "Monitors PancakeSwap V2/USDT positions and rebalances LP ranges when price drifts outside ±2%.",
-    performance: "Sharpe-like 1.4 over 30 days on testnet",
-  },
-  {
-    id: "bnb-studio-reference-005",
-    name: "Multi-Pool Rebalancer",
-    category: "rebalancing",
-    description: "Manages multiple LP positions across PancakeSwap stablecoin pools with shared capital.",
-    performance: "Reduced idle capital 22% in backtest",
-  },
-  {
-    id: "bnb-studio-reference-002",
-    name: "BNB/USDT Grid Bot",
-    category: "grid-trading",
-    description: "Runs a 12-level grid on BNB/USDT with volume-weighted spacing.",
-    performance: "Fill rate 68% last 7 days on testnet",
-  },
-  {
-    id: "bnb-studio-reference-006",
-    name: "Volatility Grid",
-    category: "grid-trading",
-    description: "Adjusts grid spacing based on recent ATR to avoid whipsaw losses.",
-    performance: "Lower max drawdown than fixed grid in testnet",
-  },
-  {
-    id: "bnb-studio-reference-003",
-    name: "Yield Router",
-    category: "yield-optimization",
-    description: "Compares PancakeSwap, ApeSwap, and Thena farms and rotates capital weekly.",
-    performance: "Net APR +3.1pp vs baseline in testnet",
-  },
-  {
-    id: "bnb-studio-reference-007",
-    name: "Auto Farm Optimizer",
-    category: "yield-optimization",
-    description: "Auto-compounds rewards and routes new deposits to best yield after fees.",
-    performance: "Gas-aware switching in 48h horizon tests",
-  },
-  {
-    id: "bnb-studio-reference-004",
-    name: "Lending Watchdog",
-    category: "health-factor",
-    description: "Tracks BNB-backed loan positions and triggers partial repay before HF drops below 1.15.",
-    performance: "Prevented simulated liquidation in 9/10 shock tests",
-  },
-  {
-    id: "bnb-studio-reference-008",
-    name: "Margin Guard",
-    category: "health-factor",
-    description: "Monitors cross-margin health factor and adds collateral when buffer shrinks.",
-    performance: "Kept HF > 1.25 in -12% price shock test",
-  },
-];
-
-export const metadata: Metadata = {
-  title: "Category | BNB Agent Marketplace",
-  description: "Browse agents by category",
-};
-
-export function generateStaticParams() {
-  return [
-    { name: "rebalancing" },
-    { name: "grid-trading" },
-    { name: "yield-optimization" },
-    { name: "health-factor" },
-  ];
+export async function generateStaticParams() {
+  return Object.keys(CATEGORY_META).map((name) => ({ name }));
 }
 
-export default function CategoryPage({ params }: { params: { name: string } }) {
+export default async function CategoryPage({ params }: { params: { name: string } }) {
   const slug = params.name;
   const meta = CATEGORY_META[slug] ?? { title: slug, description: "" };
-  const agents = SAMPLE_AGENTS.filter((a) => a.category === slug);
+  const agents = await getAgentsByCategory(slug);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -112,7 +50,7 @@ export default function CategoryPage({ params }: { params: { name: string } }) {
 
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {agents.map((agent) => (
-            <a
+            <Link
               key={agent.id}
               href={`/agents/${agent.id}`}
               className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 hover:border-white/25 transition"
@@ -121,7 +59,7 @@ export default function CategoryPage({ params }: { params: { name: string } }) {
               <p className="mt-2 text-sm text-slate-300 line-clamp-2">{agent.description}</p>
               <p className="mt-3 text-xs text-slate-400">Performance: {agent.performance}</p>
               <div className="mt-4 text-xs text-white">View details →</div>
-            </a>
+            </Link>
           ))}
         </div>
 

@@ -1,2 +1,2 @@
-:HL["/bnb-agent-marketplace/_next/static/chunks/0rgp66-5zi9ox.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"82oM-Ir4OiryUk6i4NZJk"}
+:HL["/_next/static/chunks/0sbmi9mn18tjt.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"c8PEoMA3whZ-vHZxvG7zq"}
